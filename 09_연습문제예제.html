@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>09_연습문제 예제</title>
+
+    <style>
+        .area{
+            width: 100px;
+            height: 100px;
+            border : 1px solid black;
+        }
+
+        .inputColor{
+            padding : 0;
+            margin : 0;
+            box-sizing: border-box;
+            width: 100px;
+
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="area"></div>
+    <input type="text" class="inputColor"> <br>
+    <button type="button" id="btn">색변경</button>
+
+    <script>
+        // id가 btn인 버튼 요소가 클릭이 되었을 때 함수 실행
+        document.getElementById("btn").onclick = function(){
+            // 익명함수 (이름이 없는 함수)
+            // 이벤트 동작 , 1회성 , 즉시 실행 함수에서 사용한다.
+            // + 함수 타입의 변수 선언 시 사용 가능
+            
+            // 클래스가 inputColor인 요소들을 모두 선택하여 배열로 반환 받은 후
+            // 0번 인덱스에 있는 요소의 값(value)를 콘솔로 출력
+            var inputArr = document.getElementsByClassName("inputColor");
+            console.log(inputArr[0].value);
+
+            // 클래스가 area인 요소들을 모두 선택하여 배열로 반환 받는다.
+            var arr = document.getElementsByClassName("area");
+
+            // 0번 인덱스에 있는 요소의 배경색을 
+            // inputArr[0].value로 변경하기
+            arr[0].style.backgroundColor = inputArr[0].value;
+
+        }
+    </script>
+
+    <hr>
+
+    <button type="button" id="add">추가</button>
+    <button type="button" id="reset">초기화</button>
+    <div id="wrapper">
+        <input type="number"><br>
+    </div>
+
+    <script>
+        document.getElementById("add").onclick = function(){
+            
+            document.getElementById("wrapper").innerHTML += '<input type="number"><br>';
+        }
+        document.getElementById("reset").onclick = function(){
+            
+            document.getElementById("wrapper").innerHTML = '<input type="number"><br>';
+        }
+    </script>
+
+</body>
+</html>

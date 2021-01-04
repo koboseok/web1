@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>11_함수_1</title>
+
+    <style>
+        p{
+            width: 500px;
+            height: 100px;
+            border : 1px solid black;
+            background-color: #ccc;
+
+        }
+    </style>
+</head>
+<body>
+
+    <h1>함수(function)</h1>
+    <h3>기본적인 함수 정의, 호출 방법</h3>
+    <pre>
+    - 함수 정의
+    <!-- 선언적 함수 -->
+    function 함수명([매개변수]){
+        수행할 코드;
+    }
+
+    - 함수 호출
+    함수명([매개변수]);
+
+    - 함수 호출 방법
+    > 이벤트를 이용한 호출 ex) onclick="testFn()";
+    > script 태그내 코드에서 호출  ex) testFn();
+
+    </pre>
+
+    <button type="button" onclick="test1()">클릭 시 함수 호출</button>
+
+    <!-- <button type="button" id="btn1">클릭 시 함수 호출</button> -->
+    <p id="p1"></p>
+
+    <script>
+        // 버튼 클릭 횟수를 p1 아이디를 가진 p태그에 출력
+        
+        var clickCount = 0; // 전역변수
+        function test1(){
+            document.getElementById("p1").innerText = ++clickCount;
+            
+            
+        }
+        
+        // id값이 btn1인 요소가 클릭되었을 때 test1() 함수 호출
+        // document.getElementById("btn1").onclick = test1();
+        // 이벤트 발생 시 이미 정의된 함수가 있다면 함수를 호출만 하면 된다.
+       
+    </script>
+
+    <hr>
+
+    <h3>익명함수(이름이 없는 함수)</h3>
+    <pre>
+    - function([매개변수]){
+        수행할 코드;
+    }
+    사용 예시
+    - 이벤트별 동작(기능) 부여 , 즉시 실행 함수에서 주로 사용된다.
+    - 변수에 함수를 저장할 때 , 매개변수로 함수를 전달할 때도 사용 가능하다.
+
+    </pre>
+
+    <button type="button" id="btn2">익명함수 확인</button>
+
+    <script>
+        // 문서 내에서 id가 btn2인 요소가 클릭 되었을 때
+        // 경고창을 통해 "btn2 클릭됨"을 출력해라
+        document.getElementById("btn2").onclick = function(){
+                                                // 익명함수
+            alert("btn2 클릭됨")                                            
+        }
+    </script>
+
+    <hr>
+
+    <h3>즉시 실행 함수</h3>
+    <pre>
+    -       ( function([매개변수]){수행할 코드;} )(); 
+     <!-- function([매개변수]){ 수행할 코드; } ->이만큼이 함수명이 됨. -->
+     <!-- 속도적 측면 , 전역변수와의 충돌을 막기 위해 많이 사용 -->
+    
+    - 익명 함수의 한 종류
+
+    - 함수가 정의 되자마자 실행되는 함수
+
+    * 사용하는 이유
+    - 함수 정의, 호출, 변수 저장같은 함수와 관련된 일련의 과정을 거치지 않고
+     즉시 실행되므로 일반적인 함수 사용법 보다 속도적인 측면에서 우세하다.
+
+     - 사용하려는 변수명이 이미 전역변수로 사용되고 있는 경우
+        즉시 실행 함수를 이용하여 지역변수 형태로 변환하는 방법으로
+        변수명 충돌 문제를 해결
+    </pre>
+
+    <!-- <button type="button" id="btn3">즉시 실행 함수 확인</button> -->
+    <p id="p3"></p>
+
+    <script>
+        var p3 = document.getElementById("p3");
+
+        var str = "전역변수<br>";
+
+        (function(){
+            var str = "즉시 실행 함수<br>"
+            p3.innerHTML+= str;
+
+        })();
+        
+        p3.innerHTML+= str;
+
+    </script>
+
+    <hr>
+    <h3>함수의 매개변수(전달인자/parameter)</h3>
+    <pre>
+    자바스크립트의 함수는 지정된 매개변수보다
+    더 많거나 , 적은 수의 매개변수를 전달할 수 있다.
+    </pre>
+
+    <button type="button" id="btn4">확인하기</button>
+    <p id="p4"></p>
+
+    <script>
+        function test4(value){
+            document.getElementById("p4").innerHTML += value +"<br>";
+        }
+
+        // id 가 btn4인 요소가 클릭 되었을 때 이벤트 동작
+        document.getElementById("btn4").onclick = function(){
+
+            // p4 요소에 작성된 내용 삭제
+            document.getElementById("p4").innerHTML = "";
+
+            // 함수 정상 호출
+            test4("안녕하세요.");
+
+            // 지정된 매개변수의 수 보다 많이 전달했을 경우
+            test4("안녕하세요.", "반갑습니다.");
+            // 초과된 매개변수 "반갑습니다."를 무시하고 출력
+
+            // 지정된 매개변수의 수 보다 적게 전달했을 경우
+            test4();
+            // 전달되지 않은 매개변수는 undefined로 처리된다.
+
+            // 자바스크립트에서 매개변수가 많다, 모자르다 라고 오류나는 일을 없다.
+
+        }
+    </script>
+
+
+    <hr>
+
+    <h3>함수의 리턴처리</h3>
+    <button type="button" id="btn5">확인하기</button>
+    <p id="p5"></p>
+
+    <script>
+        function test5(){
+            // 1 ~ 100 사이의 난수를 발생시켜서 반환 해라
+            return Math.floor(Math.random()*100+1);
+
+        }
+
+        document.getElementById("btn5").onclick = function() {
+
+            // 버튼 클릭 시 마다 p5 영역에 난수 출력
+            document.getElementById("p5").innerHTML += test5() + "<br>";
+        }
+    </script>
+
+    <h3>가변인자 함수 테스트</h3>
+    <!-- 매개변수의 개수가 변할수 있는 함수 -->
+    <pre>
+    매개변수의 개수가 변하는 함수를 말하며, 
+    모든 함수 내부에 argument라는 객체가 자동 생성되어
+    배열 형태로 매개변수를 저장하게 된다.
+
+    매개변수가 지정되지 않은 값이 넘어오면
+    argument라는 객체에 배열처럼 인덱스를 부여하고 순서대로 저장한다.
+    <!-- 매개변수가 몇개가 들어올지 모르는 경우 사용을 한다. -->
+    </pre>
+
+    <button type="button" id="btn6">확인하기</button>
+    <p id="p6"></p>
+
+    <script>
+        document.getElementById("btn6").onclick = function(){
+
+            document.getElementById("p6").innerHTML =  sumAll(1,2,3,4,5,6,7,8,9,10);
+        }
+
+        // 매개변수로 전달받은 값을 모두 더해서 반환하는 함수
+        function sumAll(){
+            console.log(typeof(arguments)); // arguments의 자료형
+            console.log(arguments.length); // arguments의 길이
+            console.log(arguments); // arguments에 저장된 배열 요소
+
+            // arguments에 저장된 요소 합 구하기
+
+            var sum = 0;
+
+            for(var i of arguments){
+                sum += i;
+            }
+
+            return sum;
+
+            // for(var i=0; i<arguments.length; i++){
+            //     sum += arguments[i];
+            // }
+
+            // return sum;
+
+        }
+
+    </script>
+
+    <hr>
+    
+    <h3>내부 함수(중첩 함수)</h3>
+    <pre>
+    함수 내에 함수가 작성된 형태
+
+    특정 함수 내에서 사용할 기능을 정의해 두는 형태
+    <!-- 함수도 자바스크립트에서 자료형이다. -->
+    </pre>
+    
+    <h4>피타고라스 정리를 이용한 빗변 길이 계산(a^2 + b^2 = c^2) </h4>
+
+    삼각형 밑변길이 :
+    <input type="numeber" min="1" max="1000" id="width"> <br>
+    삼각형의 높이 길이 : 
+    <input type="numeber" min="1" max="1000" id="height"> <br>
+
+    삼각형의 빗변 길이 : 
+    <input type="number" id="hypotenuse" readonly>
+    <!-- readonly : 읽기 전용 -->
+
+    <button type="button" id="btn7">계산하기</button>
+
+    <script>
+        function calc(w,h){
+            // 밑변, 높이를 전달받아 빗변 길이를 계산하여 반환
+
+            function square(x){
+                // 전달받은 수를 제곱해서 반환하는 내부함수
+                return x*x;
+            }
+
+            return Math.sqrt(square(w) + square(h));
+        }
+
+        document.getElementById("btn7").onclick = function(){
+            // id가 width , height인 input태그에 작성된 값을 얻어와
+            // clac()함수의 매개변수로 전달하고 반환 받은 값을 
+            // hypotenuse에  출력하기
+
+            var width = document.getElementById("width").value;
+            var height = document.getElementById("height").value;
+
+            document.getElementById("hypotenuse").value = calc(width,height);
+        }
+    </script>
+
+
+
+
+
+
+
+</body>
+</html>

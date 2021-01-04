@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>15_연습문제_1</title>
+
+    <style>
+      
+      div{box-sizing: border-box;}
+
+      .wraaper{
+          width: 700px;
+          height: 500px;
+
+      }
+      
+      .area{
+          float: left;
+          width: 50%;
+          height: 100%;
+      }
+
+      #area2 > label{ 
+        /* lable은 inlien 형식 width , height 설정 불가 
+        그래서 inline-block으로 설정해 주어야한다. */
+        display: inline-block;
+        width: 60px;
+      }
+      td{
+          /* 출력되는 이름, 점수를 가운데 정렬 */
+          text-align: center;
+      }
+
+      .wrapper > h3 {
+          /* 제목 위치 수정 */
+          margin-left: 60px;
+      }
+
+      tr > th:first-of-type{
+          /* tr 자식 요소 중 첫번째 th 태그 (이름) */
+          width: 50px;
+
+      }
+    </style>
+
+
+</head>
+<body>
+    <div class="wrapper">
+        <h3>학생 점수 관리 프로그램</h3>
+
+        <div class="area" id="area1">
+            <table id="stdList" border="1">
+                <tr>
+                    <th>이름</th>
+                    <th>Java</th>
+                    <th>Oracle</th>
+                    <th>JDBC</th>
+                    <th>HTML</th>
+                    <th>합계</th>
+                    <th>평균</th>
+                </tr>
+
+              
+            </table>
+        </div>
+
+        <div class="area" id="area2">
+            <label for="sName">이름 : </label>
+            <input type="text" name="sName" id="sName" class="stdInfo"><br>
+            
+            <label for="Java">Java : </label>
+            <input type="number" name="Java" id="Java" class="stdInfo"><br>
+
+            <label for="Oracle">Oracle : </label>
+            <input type="number" name="Oracle" id="Oracle" class="stdInfo"><br>
+
+            <label for="JDBC">JDBC : </label>
+            <input type="number" name="JDBC" id="JDBC" class="stdInfo"><br>
+
+            <label for="HTML">HTML : </label>
+            <input type="number" name="HTML" id="HTML" class="stdInfo">
+
+            <button type="button" id="btn">추가</button>
+
+        </div>
+
+    </div>
+
+ 
+
+     <script>
+        // 추가 버튼이 클릭된 경우
+        document.getElementById("btn").onclick = function(){
+
+            // input 태그의 class가 stdInfo인 모든 요소를 배열 형태로 불러온
+           var stdInfo = document.getElementsByClassName("stdInfo");
+
+            // stdInfo를 가져오는 score 객체 생성
+           var score = new Score(stdInfo);
+
+            // 자바에서의 vo 처럼 생성자로 값을 가져옴 stdInfo
+           function Score(stdInfo){
+            this.sName = stdInfo[0].value;
+            this.Java = Number(stdInfo[1].value);
+            this.Oracle = Number(stdInfo[2].value);
+            this.JDBC = Number(stdInfo[3].value);
+            this.HTML = Number(stdInfo[4].value);
+            
+            // 합계 메소드를 만듬
+            this.getSum = function(){
+                return  this.Java + this.Oracle + this.JDBC + this.HTML;
+            }    
+            // 평균 메소드를 만듬
+            this.getAvg = function(){
+                return this.getSum() / 4;
+            }
+           } 
+        //    with를 통해 score 생성자를 기본값으로 설정해 코드길이 감소 시킨다. 앞에 score.sName를 안해도된다.
+
+            with(score){
+            var tr = "<tr>";
+            tr += "<td>"+ sName +"</td>";
+            tr += "<td>"+ Java +"</td>";
+            tr += "<td>"+ Oracle +"</td>";
+            tr += "<td>"+ JDBC +"</td>";
+            tr += "<td>"+ HTML +"</td>";
+            tr += "<td>"+ getSum() +"</td>";
+            tr += "<td>"+ getAvg() +"</td>";
+            tr += "</tr>";
+
+            }
+
+            document.getElementById("stdList").innerHTML += tr;
+         
+        }
+    </script> 
+   
+
+
+
+</body>
+</html>
